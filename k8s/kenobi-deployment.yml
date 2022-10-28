@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kenobi-deployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: kenobi
+  template:
+    metadata:
+      labels:
+        app: kenobi
+    spec:
+      containers:
+      - name: kenobi
+        image: egrzeszczak/kenobi:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
