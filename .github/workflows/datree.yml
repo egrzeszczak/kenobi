@@ -9,11 +9,12 @@ env:
 
 jobs:
   k8sPolicyCheck:
+    name: Check K8s files against policies
     runs-on: ubuntu-latest
 
     steps:
       - name: 1. Checkout this repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         
       - name: 2. Run Datree Policy Check on K8s files
         uses: datreeio/action-datree@main
