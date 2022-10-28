@@ -1,0 +1,73 @@
+name: CI/CD
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  build-nuxt:
+    name: Build Kenobi (Nuxt)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        name: 1. Checkout this repository
+
+      - uses: actions/setup-node@v2
+        name: 2. Prepare Node 18.x environment
+        with:
+          node-version: 18.x
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+
+      - run: npm install
+        name: 3. Install dependencies
+
+      - run: npx nuxi build
+        name: 4. Build application
+
+      - uses: actions/upload-artifact@master
+        name: 5. Pass the build files to next job
+        with:
+          name: built-kenobi
+          path: .output/**
+
+  build-docker-image-and-push:
+    name: Build and push Kenobi (Docker)
+    needs: build-nuxt
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      name: 1. Checkout this repository
+
+    - uses: actions/download-artifact@master
+      name: 2. Receive build files from Build Kenobi (Nuxt) job
+      with:
+        name: built-kenobi
+        path: app/
+
+    - uses: docker/setup-qemu-action@v2
+      name: 3. Set up QEMU
+      
+    - uses: docker/setup-buildx-action@v2
+      name: 4. Set up Docker Buildx
+
+    - uses: docker/login-action@v2
+      name: 5. Login to Docker Hub
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      name: 6. Get current tag
+
+    - uses: docker/build-push-action@v3
+      name: 7. Build and push to Dockerhub
+      with:
+        context: .
+        file: Dockerfile
+        platforms: linux/amd64
+        push: true
+        tags: |
+          egrzeszczak/kenobi:${{ env.RELEASE_VERSION }}
+          egrzeszczak/kenobi:latest
