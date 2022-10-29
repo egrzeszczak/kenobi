@@ -1,4 +1,4 @@
-name: CI/CD
+name: Build Kenobi and push to Dockerhub
 on:
   push:
     tags:

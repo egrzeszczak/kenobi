@@ -1,3 +1,4 @@
+name: Check K8s docs against Datree policies
 on:
   push:
     branches: [ master ]
