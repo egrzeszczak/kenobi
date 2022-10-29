@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: grievous-deployment
 spec:
+  replicas: 5
   selector:
     matchLabels:
       app: grievous
@@ -15,9 +16,26 @@ spec:
       - name: grievous
         image: mongo:6.0.2
         resources:
-          limits:
+          requests:
             memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
             cpu: "500m"
+        livenessProbe:
+          exec:
+            command:
+            - echo
+            - "hello"
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          exec:
+            command:
+            - echo
+            - "hello"
+          initialDelaySeconds: 5
+          periodSeconds: 5
         ports:
         - containerPort: 27017
         env:
