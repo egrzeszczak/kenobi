@@ -14,10 +14,27 @@ spec:
     spec:
       containers:
       - name: kenobi
-        image: egrzeszczak/kenobi:latest
+        image: egrzeszczak/kenobi:1.0.1
         resources:
-          limits:
+          requests:
             memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
             cpu: "500m"
+        livenessProbe:
+          exec:
+            command:
+            - echo
+            - "hello"
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          exec:
+            command:
+            - echo
+            - "hello"
+          initialDelaySeconds: 5
+          periodSeconds: 5
         ports:
         - containerPort: 3000
