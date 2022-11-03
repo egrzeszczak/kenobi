@@ -6,11 +6,11 @@ export default async (_nitroApp) => {
     console.log(config)
 
     mongoose
-    .connect(`mongodb://${config.NUXT_MONGO_ADDRESS}:27017/kenobi`)
+    .connect(`mongodb://${config.public.NUXT_MONGO_ADDRESS}:27017/kenobi`)
     .then(() => {
-        console.log(`Connected to ${config.NUXT_MONGO_ADDRESS}`)
+        console.log(`Connected to ${config.public.NUXT_MONGO_ADDRESS}`)
     })
     .catch((e) => {
-        console.log(`Error connecting to ${config.NUXT_MONGO_ADDRESS}: ${e}`)
+        console.log(`Error connecting to ${config.public.NUXT_MONGO_ADDRESS}: ${e}`)
     })
 }
