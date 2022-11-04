@@ -1,12 +1,8 @@
 import mongoose from "mongoose"
 
-export default async (_nitroApp) => {
-    // const config = useRuntimeConfig()
-
-    console.log(process.env.NUXT_MONGO_ADDRESS)
-
+const retryLogic = () => {
     // console.info(`[INFO] Connecting to GrievousDB ${config.public.NUXT_MONGO_ADDRESS}`)
-    console.info(`[INFO] Connecting to GrievousDB ${process.env.NUXT_MONGO_ADDRESS}`)
+    console.info(`[INFO] Attempting connection to GrievousDB ${process.env.NUXT_MONGO_ADDRESS}`)
 
     mongoose
         // .connect(`mongodb://${config.public.NUXT_MONGO_ADDRESS}:27017/kenobi`)
@@ -18,5 +14,10 @@ export default async (_nitroApp) => {
         .catch((e) => {
             // console.error(`[ERROR] Error connecting to GrievousDB ${config.public.NUXT_MONGO_ADDRESS}: ${e}`)
             console.error(`[ERROR] Error connecting to GrievousDB ${process.env.NUXT_MONGO_ADDRESS}: ${e}`)
+            setTimeout(retryLogic, 5000);
         })
+}
+
+export default async (_nitroApp) => {
+    retryLogic()
 }

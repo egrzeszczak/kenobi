@@ -38,14 +38,15 @@ spec:
           periodSeconds: 5
         ports:
         - containerPort: 27017
-        env:
-        - name: MONGO_INITDB_ROOT_USERNAME
-          valueFrom: 
-            secretKeyRef:
-              name: grievous-secret
-              key: username
-        - name: MONGO_INITDB_ROOT_PASSWORD
-          valueFrom: 
-            secretKeyRef:
-              name: grievous-secret
-              key: password
+          hostPort: 27017
+        # env:
+        # - name: MONGO_INITDB_ROOT_USERNAME
+        #   valueFrom: 
+        #     secretKeyRef:
+        #       name: grievous-secret
+        #       key: username
+        # - name: MONGO_INITDB_ROOT_PASSWORD
+        #   valueFrom: 
+        #     secretKeyRef:
+        #       name: grievous-secret
+        #       key: password
