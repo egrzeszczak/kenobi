@@ -2,7 +2,7 @@ export default defineNuxtConfig({
 	buildModules: ["@nuxtjs/tailwindcss"],
 	runtimeConfig: {
 		public: {
-			NUXT_MONGO_ADDRESS: process.env.NUXT_MONGO_ADDRESS || 'localhost'
+			NUXT_MONGO_ADDRESS: process.env.NUXT_MONGO_ADDRESS
 		}
 	},
 	nitro: {
