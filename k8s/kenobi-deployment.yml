@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: kenobi
-        image: egrzeszczak/kenobi:1.0.2
+        image: egrzeszczak/kenobi:1.0.8
         resources:
           requests:
             memory: "128Mi"
@@ -38,3 +38,9 @@ spec:
           periodSeconds: 5
         ports:
         - containerPort: 3000
+        env:
+        - name: NUXT_MONGO_ADDRESS
+          valueFrom: 
+            configMapKeyRef:
+              name: kenobi-config
+              key: grievous-address
