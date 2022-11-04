@@ -2,16 +2,33 @@
 
 This is a K8s learning / testing ground
 
-Base Nuxt 3 application to run in a K8s pod
+Base Nuxt 3 application to run in a K8s cluster that connects to a MongoDB instance
  
 ## Setup
 
-1. Deploy backend (MongoDB)
+Run via Docker
 ```
-kubectl apply -f k8s/grievous.yml
+docker run --rm -d --env NUXT_MONGO_ADDRESS=localhost -p 3000:3000/tcp egrzeszczak/kenobi
 ```
 
-2. Deploy frontend (Nuxt)
+Or run in a [K8s cluster](https://github.com/egrzeszczak/utapau)
+
+## Directory tree
+
 ```
-kubectl apply -f k8s/kenobi.yml
+├── app.vue
+├── Dockerfile
+├── nuxt.config.ts
+├── package.json
+├── package-lock.json
+├── public
+│   └── hello-there.png
+├── README.md
+├── server
+│   ├── api
+│   │   └── hostname.get.ts
+│   └── database
+│       └── grievous.ts
+├── tailwind.config.js
+└── tsconfig.json
 ```
