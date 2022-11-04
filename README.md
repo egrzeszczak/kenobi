@@ -1,26 +1,17 @@
 # kenobi
 
+This is a K8s learning / testing ground
+
 Base Nuxt 3 application to run in a K8s pod
+ 
+## Setup
 
-## K8s
-To run in a K8s pod
+1. Deploy backend (MongoDB)
 ```
-kubectl apply -f k8s/kenobi-pod.yml
-```
-
-To run a deployment
-```
-kubectl apply -f k8s/kenobi-deployment.yml
+kubectl apply -f k8s/grievous.yml
 ```
 
-To run a service
+2. Deploy frontend (Nuxt)
 ```
-kubectl apply -f k8s/kenobi-svc.yml
+kubectl apply -f k8s/kenobi.yml
 ```
-
-## Docker
-To run in a docker container
-```
-docker run --rm -d -p 3000:3000/tcp egrzeszczak/kenobi
-```
-
