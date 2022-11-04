@@ -1,9 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kenobi-config
+data:
+  grievous-address: grievous-service
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kenobi-deployment
 spec:
-  replicas: 5
+  replicas: 2
   selector:
     matchLabels:
       app: kenobi
@@ -14,7 +21,7 @@ spec:
     spec:
       containers:
       - name: kenobi
-        image: egrzeszczak/kenobi:1.0.8
+        image: egrzeszczak/kenobi:1.0.9
         resources:
           requests:
             memory: "128Mi"
@@ -44,3 +51,15 @@ spec:
             configMapKeyRef:
               name: kenobi-config
               key: grievous-address
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kenobi-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: kenobi
+  ports:
+  - port: 3000
+    targetPort: 3000

@@ -1,3 +1,12 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grievous-secret
+type: Opaque
+data:
+  username: Z2VuZXJhbA==
+  password: a2Vub2Jp
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -50,3 +59,16 @@ spec:
         #     secretKeyRef:
         #       name: grievous-secret
         #       key: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grievous-service
+spec:
+  selector:
+    app: grievous
+  ports:
+  - protocol: TCP
+    port: 27017
+    targetPort: 27017
+
